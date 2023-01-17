@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "final-projectfr"
+version = "0.1.0"
+description = ""
+authors = ["Juan <juanpapolo123@gmail.com>"]
+readme = "README.md"
+packages = [{include = "final_projectfr"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Flask = "^2.2.2"
+flask-sqlalchemy = "^3.0.2"
+flask-login = "^0.6.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
