@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block head %} 
+<title>Sign In</title>
+{% endblock %} 
+
+
+{% block main %}
+  <div class="relative w-80 inset-52">
+    <form action="/login" method="post" class="bg-slate-300 m-2 p-0">
+      <div class="mb-6">
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Name</label>
+        <input type="text" id="name" class="bg-fuchsia-50" placeholder="Your name" required name="user">
+      </div>
+        <div class="mb-6">
+          <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+          <input type="text" id="email" class="bg-fuchsia-100" placeholder="@gmail.com" required>
+        </div>
+        <div class="mb-6">
+          <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+          <input type="password" id="password" class="bg-fuchsia-300" required>
+        </div>
+        <button type="submit" class="">Submit</button>
+      </form>
+  </div>
+
+{% endblock %}
