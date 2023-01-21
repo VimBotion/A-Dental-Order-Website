@@ -43,24 +43,39 @@ def index():
 
 @app.route('/login', methods=["POST", "GET"])
 def login():
+    """Log user in"""
     if request.method == "POST":
-        user = request.form.get("name")
-        session["user"] = user
+        username = request.form.get("username")
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        # Ensure username, email and password were submitted
+        if not username or email or password:
+            return render_template("signIn.html")
+
+        # Query database for username
+        session["user"] = username
         return redirect('/')
+
+
     else:
-        return render_template("login.html")
+        return render_template("signIn.html")
 
 @app.route('/logout')
 def logout():
+    """Log user out"""
+
     session.pop("user", None)
     return redirect('/login')
 
 @app.route('/register')
 def register():
-    return render_template("register.html")
+    """Register user"""
+    if request.method == "POST":
+        return redirect("/login")
+    else:
+        return render_template("signUp.html")
     
-
-
 
 if __name__ == "__main__":
     app.app_context().push()
