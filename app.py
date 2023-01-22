@@ -10,13 +10,13 @@ app = Flask(__name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get("user") is None:
+        if session.get("user_id") is None:
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
 
 # Set up the data base
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '\xb5\xe2\xe0\xad\xec\xb9\xd3\xef\x11\x0f\xae\x98\xf0\x9e\x9d\x05\xf1'
 
@@ -25,25 +25,30 @@ with app.app_context():
 
 
 class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(15), nullable=False, unique=True)
-    email = db.Column(db.String(30), nullable=False)
+    user_id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120), nullable=False, unique=True)
+    email = db.Column(db.String(120), nullable=False)
     hash = db.Column(db.String(30), nullable=False)
 
     def __init__(self, username, email, hash):
-        self.name = username
+        self.username = username
         self.email = email
         self.hash = hash
 
 @app.route('/')
 @login_required
 def index():
-    user = session["user"]
+    """Show homepage """ 
+    user_id = session["user_id"]
     return render_template("index.html")
 
 @app.route('/login', methods=["POST", "GET"])
 def login():
     """Log user in"""
+
+    # Forget any user_id
+    session.clear()
+
     if request.method == "POST":
         username = request.form.get("username")
         email = request.form.get("email")
@@ -54,8 +59,18 @@ def login():
             return render_template("login.html")
 
         # Query database for username
-        session["user"] = username
-        return redirect('/')
+
+        rows = db.session.execute(db.select(User).filter_by(username=username))
+
+        # Ensure username exists and password is correct
+        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            return render_template("login.html")
+
+        # Remember which user has logged in
+        session["user_id"] = rows[0]["id"]
+
+        # Redirect user to home page
+        return redirect("/")
     else:
         
         return render_template("login.html")
@@ -73,26 +88,37 @@ def register():
     """Register user"""
 
     if request.method == "POST":
-        username = request.form.get("username")
+        name = request.form.get("name")
         email = request.form.get("email")
         password = request.form.get("password")
         confirm_Password = request.form.get("confirm-password")
 
+        print(name)
+
         # Ensure username, email and password were submitted
-        if not username or not email or not password:
+        if not name or not email or not password:
             return render_template("register.html")
 
         # Ensure password and confirm password are equal
         if password != confirm_Password:
             return render_template("register.html")
 
-        hash = generate_password_hash("password") 
+        # Encript the password
+        hash = generate_password_hash("password")
+
+        # Add the new user to the database
+        try: 
+            new_user = User(username=name, email=email, hash=hash)
+            db.session.add(new_user)
+            db.session.commit()
+            session["user"] = new_user
+            return redirect("/")
+        except: 
+            pass
 
     else:
         return render_template("register.html")
     
 
 if __name__ == "__main__":
-    app.app_context().push()
-    db.create_all()
     app.run(debug=True)

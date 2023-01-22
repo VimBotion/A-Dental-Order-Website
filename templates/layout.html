@@ -41,23 +41,9 @@
       {% block main %}
 
       {% endblock %}
-      <script>
-        const emailInput = document.getElementById("email");
-        const feedback = document.getElementById("feedback");
+ 
+      {% block javascript %}
 
-        emailInput.addEventListener("input", function(){
-          let email = emailInput.value;
-          let emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-          if(!emailPattern.test(email)) {
-            feedback.innerHTML = "Invalid email format";
-          } else {
-            feedback.innerHTML = "Valid email format";
-          }
-     });
-
-        
-
-      </script>
+      {% endblock %}
     </body>
 </html>
