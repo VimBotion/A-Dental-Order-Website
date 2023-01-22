@@ -51,18 +51,15 @@ def login():
 
         # Ensure username, email and password were submitted
         if not username or not email or not password:
-            return render_template("signIn.html")
+            return render_template("login.html")
 
         # Query database for username
         session["user"] = username
         return redirect('/')
     else:
-        return render_template("signIn.html")
+        
+        return render_template("login.html")
 
-
-
-    # else:
-    #     return render_template("signIn.html")
 
 @app.route('/logout')
 def logout():
@@ -77,7 +74,7 @@ def register():
     if request.method == "POST":
         return redirect("/login")
     else:
-        return render_template("signUp.html")
+        return render_template("register.html")
     
 
 if __name__ == "__main__":
