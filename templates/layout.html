@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="/static/output.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.css"  rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js">
+        </script>
+        
         {% block script %}{% endblock %}
         <title>{% block title %}{% endblock %}</title>
     </head>
@@ -39,6 +41,23 @@
       {% block main %}
 
       {% endblock %}
-      <script src="{{url_for('static', filename='validation.js')}}"></script>
+      <script>
+        const emailInput = document.getElementById("email");
+        const feedback = document.getElementById("feedback");
+
+        emailInput.addEventListener("input", function(){
+          let email = emailInput.value;
+          let emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+          if(!emailPattern.test(email)) {
+            feedback.innerHTML = "Invalid email format";
+          } else {
+            feedback.innerHTML = "Valid email format";
+          }
+     });
+
+        
+
+      </script>
     </body>
 </html>
