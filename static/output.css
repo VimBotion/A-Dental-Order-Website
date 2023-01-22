@@ -547,6 +547,16 @@ video {
   }
 }
 
+.error {
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
+.succes {
+  --tw-text-opacity: 1;
+  color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

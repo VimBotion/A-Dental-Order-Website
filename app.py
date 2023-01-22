@@ -68,11 +68,26 @@ def logout():
     session.pop("user", None)
     return redirect('/login')
 
-@app.route('/register')
+@app.route('/register', methods=["POST", "GET"])
 def register():
     """Register user"""
+
     if request.method == "POST":
-        return redirect("/login")
+        username = request.form.get("username")
+        email = request.form.get("email")
+        password = request.form.get("password")
+        confirm_Password = request.form.get("confirm-password")
+
+        # Ensure username, email and password were submitted
+        if not username or not email or not password:
+            return render_template("register.html")
+
+        # Ensure password and confirm password are equal
+        if password != confirm_Password:
+            return render_template("register.html")
+
+        hash = generate_password_hash("password") 
+
     else:
         return render_template("register.html")
     
