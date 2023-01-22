@@ -50,16 +50,19 @@ def login():
         password = request.form.get("password")
 
         # Ensure username, email and password were submitted
-        if not username or email or password:
+        if not username or not email or not password:
             return render_template("signIn.html")
 
         # Query database for username
         session["user"] = username
         return redirect('/')
-
-
     else:
         return render_template("signIn.html")
+
+
+
+    # else:
+    #     return render_template("signIn.html")
 
 @app.route('/logout')
 def logout():
