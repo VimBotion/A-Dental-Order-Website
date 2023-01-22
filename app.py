@@ -56,10 +56,10 @@ def login():
         # Query database for username
         session["user"] = username
         return redirect('/')
-
-
     else:
+        
         return render_template("login.html")
+
 
 @app.route('/logout')
 def logout():
