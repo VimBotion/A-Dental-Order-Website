@@ -12,7 +12,7 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
-      {% if session["user"] %}  
+      {% if session["user_id"] %}  
       <nav class="bg-primary border-gray-200 px-2 sm:px-4 py-2.5  dark:bg-primary">
         <div class="container flex flex-wrap items-center justify-between mx-auto">
           <a href="/" class="flex items-center">

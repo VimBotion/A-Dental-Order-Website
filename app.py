@@ -16,6 +16,7 @@ def login_required(f):
     return decorated_function
 
 # Set up the data base
+app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '\xb5\xe2\xe0\xad\xec\xb9\xd3\xef\x11\x0f\xae\x98\xf0\x9e\x9d\x05\xf1'
@@ -59,15 +60,14 @@ def login():
             return render_template("login.html")
 
         # Query database for username
-
-        rows = db.session.execute(db.select(User).filter_by(username=username))
+        rows = db.session.execute(db.select(User).filter_by(username=username)).scalars().all()
 
         # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+        if len(rows) == 0 or not check_password_hash(rows[0].hash, password) or rows[0].email != email:
             return render_template("login.html")
-
+           
         # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
+        session["user_id"] = rows[0].user_id
 
         # Redirect user to home page
         return redirect("/")
@@ -104,21 +104,24 @@ def register():
             return render_template("register.html")
 
         # Encript the password
-        hash = generate_password_hash("password")
+        hash = generate_password_hash(password)
 
         # Add the new user to the database
         try: 
             new_user = User(username=name, email=email, hash=hash)
             db.session.add(new_user)
             db.session.commit()
-            session["user"] = new_user
+            session["user_id"] = "new_user.get_id"
             return redirect("/")
         except: 
-            pass
+            return redirect("/register")
 
     else:
         return render_template("register.html")
     
 
 if __name__ == "__main__":
+    from app import app, db
+    app.app_context().push()
+    db.create_all()
     app.run(debug=True)
