@@ -4,6 +4,7 @@ const email = document.getElementById("email")
 const password = document.getElementById("password")
 const passwordConfirmation = document.getElementById("confirm-password")
 
+
 form.addEventListener("submit", e => {
     e.preventDefault();
 
