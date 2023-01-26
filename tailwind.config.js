@@ -6,6 +6,9 @@ module.exports = {
       colors:{
         primary: "#122b39",
         letters: "#35b29c"
+      },
+      backgroundImage: {
+        'home-page': "url('/static/logos/dentistaIndex.jpg')"                                     
       }
     },
   },
