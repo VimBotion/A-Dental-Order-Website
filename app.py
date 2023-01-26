@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 app = Flask(__name__)
 
+# Forces the user to be log in to see some contents of the page
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -39,7 +40,8 @@ class User(db.Model, UserMixin):
 @app.route('/')
 @login_required
 def index():
-    """Show homepage """ 
+    """Show homepage""" 
+
     user_id = session["user_id"]
     return render_template("index.html")
 
@@ -62,7 +64,7 @@ def login():
         # Query database for username
         rows = db.session.execute(db.select(User).filter_by(username=username)).scalars().all()
 
-        # Ensure username exists and password is correct
+        # Ensure username exists and password and email exists
         if len(rows) == 0 or not check_password_hash(rows[0].hash, password) or rows[0].email != email:
             return render_template("login.html")
            
@@ -72,9 +74,7 @@ def login():
         # Redirect user to home page
         return redirect("/")
     else:
-        
         return render_template("login.html")
-
 
 @app.route('/logout')
 def logout():
@@ -93,8 +93,6 @@ def register():
         password = request.form.get("password")
         confirm_Password = request.form.get("confirm-password")
 
-        print(name)
-
         # Ensure username, email and password were submitted
         if not name or not email or not password:
             return render_template("register.html")
@@ -106,7 +104,7 @@ def register():
         # Encript the password
         hash = generate_password_hash(password)
 
-        # Add the new user to the database
+        # Add the new user to the database only if the new name doesn't exist
         try: 
             new_user = User(username=name, email=email, hash=hash)
             db.session.add(new_user)
@@ -119,6 +117,15 @@ def register():
     else:
         return render_template("register.html")
     
+@app.route('/location')
+def location():
+    return render_template("location.html")
+
+@app.route('/order')
+@login_required
+def order():
+    """Show the form to do an order""" 
+    return render_template("order.html")  
 
 if __name__ == "__main__":
     from app import app, db
