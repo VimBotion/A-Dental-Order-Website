@@ -121,11 +121,23 @@ def register():
 def location():
     return render_template("location.html")
 
-@app.route('/order')
+@app.route('/order', methods=["POST", "GET"])
 @login_required
 def order():
     """Show the form to do an order""" 
-    return render_template("order.html")  
+    if request.method == "POST":
+        doc_Name = request.form.get("doctor-name")
+        patient_Name = request.form.get("patient-name")
+        patient_Age = request.form.get("patient-age")
+        patient_Color_Chart = request.form.get("tooth-color-chart")
+        phone_Number = request.form.get("floating-phone")
+        indications = request.form.get("indications")
+
+        print(doc_Name, patient_Name, patient_Age, patient_Color_Chart, phone_Number, indications)
+        return redirect("/")
+    else:
+        return render_template("order.html")
+
 
 if __name__ == "__main__":
     from app import app, db
