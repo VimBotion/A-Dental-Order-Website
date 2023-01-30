@@ -27,7 +27,7 @@ with app.app_context():
 
 
 class User(db.Model, UserMixin):
-    user_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), nullable=False, unique=True)
     email = db.Column(db.String(120), nullable=False)
     hash = db.Column(db.String(30), nullable=False)
@@ -36,6 +36,15 @@ class User(db.Model, UserMixin):
         self.username = username
         self.email = email
         self.hash = hash
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    doctor_id = db.Column(db.Integer, nullable=False)
+    patient_name = db.Column(db.String(120), nullable=False)
+    patient_age = db.Column(db.Integer, nullable=False)
+    color_chart = db.Column(db.String(30), nullable=False)
+
+
 
 @app.route('/')
 @login_required
@@ -126,14 +135,27 @@ def location():
 def order():
     """Show the form to do an order""" 
     if request.method == "POST":
-        doc_Name = request.form.get("doctor-name")
         patient_Name = request.form.get("patient-name")
         patient_Age = request.form.get("patient-age")
         patient_Color_Chart = request.form.get("tooth-color-chart")
         phone_Number = request.form.get("floating-phone")
         indications = request.form.get("indications")
+        patient_Men = request.form.get("men")
+        patient_Women = request.form.get("women")
 
-        print(doc_Name, patient_Name, patient_Age, patient_Color_Chart, phone_Number, indications)
+        # Ensure all the data were entered
+        if not patient_Name or not patient_Age or not patient_Color_Chart or not indications or not phone_Number:
+            return render_template("order.html")
+        if not patient_Men and not patient_Women:
+            return render_template("order.html")
+
+        if patient_Men:
+            # Insert into the database a patient who is a men
+            pass
+        elif patient_Women:
+            # Insert into the database a patient who is a women
+            pass
+
         return redirect("/")
     else:
         return render_template("order.html")

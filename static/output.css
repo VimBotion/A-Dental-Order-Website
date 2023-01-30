@@ -580,11 +580,6 @@ video {
   margin: 5rem;
 }
 
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .ml-6 {
   margin-left: 1.5rem;
 }
@@ -752,10 +747,6 @@ video {
 
 .flex-wrap {
   flex-wrap: wrap;
-}
-
-.place-items-end {
-  place-items: end;
 }
 
 .items-center {
