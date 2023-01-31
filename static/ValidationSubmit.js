@@ -25,7 +25,7 @@ function checkInputs() {
 	
 	if(emailValue === '') {
 		setErrorFor(email, 'Email cannot be blank');
-	} else if (!isEmail(emailValue)) {
+	} else if (!Pattern(emailValue)) {
 		setErrorFor(email, 'Not a valid email');
 	} else {
 		setSuccessFor(email);
@@ -46,7 +46,7 @@ function checkInputs() {
 	}
 }
 
-function isEmail(email) {
+function Pattern(email) {
 	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
 }
 
