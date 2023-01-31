@@ -536,6 +536,10 @@ video {
   position: static;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
@@ -574,11 +578,6 @@ video {
 
 .m-20 {
   margin: 5rem;
-}
-
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .ml-6 {
@@ -750,10 +749,6 @@ video {
   flex-wrap: wrap;
 }
 
-.place-items-end {
-  place-items: end;
-}
-
 .items-center {
   align-items: center;
 }
@@ -866,6 +861,10 @@ video {
 
 .p-2\.5 {
   padding: 0.625rem;
+}
+
+.p-7 {
+  padding: 1.75rem;
 }
 
 .px-2 {

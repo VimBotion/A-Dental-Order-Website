@@ -11,7 +11,7 @@ app = Flask(__name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
+        if session.get("id") is None:
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
@@ -27,22 +27,43 @@ with app.app_context():
 
 
 class User(db.Model, UserMixin):
-    user_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), nullable=False, unique=True)
     email = db.Column(db.String(120), nullable=False)
     hash = db.Column(db.String(30), nullable=False)
+    patient = db.relationship('Order', backref='doctor', uselist=False                                                                                                  )
 
     def __init__(self, username, email, hash):
         self.username = username
         self.email = email
         self.hash = hash
 
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_name = db.Column(db.String(120), nullable=False)
+    patient_age = db.Column(db.Integer, nullable=False)
+    color_chart = db.Column(db.String(30), nullable=False)
+    phone_number = db.Column(db.String(30), nullable=False)
+    patient_sex = db.Column(db.String(10), nullable=False)
+    indications = db.Column(db.String(120), nullable=False)
+    doctor_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __init__(self, patient_name, patient_age, color_chart, phone_number, patient_sex, indications, doctor_id):
+        self.patient_name = patient_name
+        self.patient_age = patient_age
+        self.color_chart = color_chart
+        self.phone_number = phone_number
+        self.patient_sex = patient_sex
+        self.indications = indications
+        self.doctor_id = doctor_id
+
+
 @app.route('/')
 @login_required
 def index():
     """Show homepage""" 
 
-    user_id = session["user_id"]
+    user_id = session["id"]
     return render_template("index.html")
 
 @app.route('/login', methods=["POST", "GET"])
@@ -69,7 +90,7 @@ def login():
             return render_template("login.html")
            
         # Remember which user has logged in
-        session["user_id"] = rows[0].user_id
+        session["id"] = rows[0].id
 
         # Redirect user to home page
         return redirect("/")
@@ -109,7 +130,7 @@ def register():
             new_user = User(username=name, email=email, hash=hash)
             db.session.add(new_user)
             db.session.commit()
-            session["user_id"] = "new_user.get_id"
+            session["id"] = "new_user.get_id"
             return redirect("/")
         except: 
             return redirect("/register")
@@ -118,14 +139,46 @@ def register():
         return render_template("register.html")
     
 @app.route('/location')
+@login_required
 def location():
     return render_template("location.html")
 
-@app.route('/order')
+@app.route('/order', methods=["POST", "GET"])
 @login_required
 def order():
     """Show the form to do an order""" 
-    return render_template("order.html")  
+    if request.method == "POST":
+        patient_Name = request.form.get("patient-name")
+        patient_Age = request.form.get("patient-age")
+        patient_Color_Chart = request.form.get("tooth-color-chart")
+        phone_Number = request.form.get("floating-phone")
+        indications = request.form.get("indications")
+        patient_Men = request.form.get("men")
+        patient_Women = request.form.get("women")
+
+        user_id = session["id"]
+
+        # Ensure all the data were entered
+        if not patient_Name or not patient_Age or not patient_Color_Chart or not indications or not phone_Number:
+            return render_template("order.html")
+        if not patient_Men and not patient_Women:
+            return render_template("order.html")
+
+        if patient_Men:
+            # Insert into the database a patient who is a men
+            new_patient = Order(patient_name=patient_Name, patient_age=patient_Age, color_chart=patient_Color_Chart, phone_number=phone_Number, patient_sex=patient_Men, indications=indications, doctor_id=user_id)
+            db.session.add(new_patient)
+            db.session.commit()
+        elif patient_Women:
+            # Insert into the database a patient who is a women
+            new_patient = Order(patient_name=patient_Name, patient_age=patient_Age, color_chart=patient_Color_Chart, phone_number=phone_Number, patient_sex=patient_Women, indications=indications, doctor_id=user_id)
+            db.session.add(new_patient)
+            db.session.commit()
+
+        return redirect("/")
+    else:
+        return render_template("order.html")
+
 
 if __name__ == "__main__":
     from app import app, db

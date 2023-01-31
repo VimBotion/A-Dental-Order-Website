@@ -9,7 +9,7 @@
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
-      {% if session["user_id"] %}  
+      {% if session["id"] %}  
       <nav class="bg-primary border-gray-200 px-2 sm:px-4 py-2.5  dark:bg-primary">
         <div class="ml-6 flex flex-wrap items-center justify-end">
           <a href="/" class="flex items-center">
@@ -25,11 +25,14 @@
                 <a href="/order" class="block py-2 pl-3 pr-4 text-letters  hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-letters md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Order</a>
               </li>
               <li class="px-8">
+                <a href="/history" class="block py-2 pl-10 pr-10 text-letters hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-letters md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Your orders</a>
+              </li>
+              <li class="px-8">
                 <a href="/location" class="block py-2 pl-10 pr-10 text-letters hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-letters md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Location</a>
               </li>
               <li class="px-8">
                 <a href="/logout" class="block py-2 pl-10 pr- text-letters hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-letters md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Log Out</a>
-                </li>
+              </li>
           </div>
         </div>
       </nav>
@@ -39,7 +42,7 @@
     
       {% endblock %}   
     </body>
-    <footer class="absolute bottom-0 w-full bg-primary text-white text-center p-2">
+    <footer class="fixed bottom-0 w-full bg-primary text-white text-center p-2">
       <p class="m-1 text-left text-sm"> Copyright © 2023 Campoverde</p>
       <nav class="flex text-white no-underline">
         <p class="text-sm m-1 p-1 text-gray-300">Phone Number: 0981519995</p>
