@@ -161,7 +161,7 @@ def order():
 
         user_id = session["id"]
 
-        # Ensure all the data were entered
+        # Ensure all the data were entered correctly
         if not patient_name or not patient_age or not patient_color_chart or not indications:
             return render_template("order.html")
         if not patient_men and not patient_women:
