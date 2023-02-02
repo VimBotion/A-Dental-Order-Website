@@ -65,7 +65,7 @@ def index():
     """Show homepage""" 
 
     user_id = session["id"]
-    order_info = db.session.execute(db.select(Order).filter_by(doctor_id=user_id).order_by(Order.dates)).scalars().all()
+    order_info = db.session.execute(db.select(Order).filter_by(doctor_id=user_id).order_by(Order.dates.desc())).scalars().all()
 
     return render_template("index.html", order=order_info)
 
@@ -88,7 +88,7 @@ def login():
         # Query database for username
         rows = db.session.execute(db.select(User).filter_by(username=username)).scalars().all()
 
-        # Ensure username exists and password and email exists
+        # Ensure username exists and password and email are correct
         if len(rows) == 0 or not check_password_hash(rows[0].hash, password) or rows[0].email != email:
             return render_template("login.html")
            
