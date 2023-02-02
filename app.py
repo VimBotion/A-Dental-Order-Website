@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from functools import wraps
 from werkzeug.security import check_password_hash, generate_password_hash
+from datetime import date
 
 
 app = Flask(__name__)
@@ -31,7 +32,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(120), nullable=False, unique=True)
     email = db.Column(db.String(120), nullable=False)
     hash = db.Column(db.String(30), nullable=False)
-    patient = db.relationship('Order', backref='doctor', uselist=False                                                                                                  )
+    patient = db.relationship('Order', backref='doctor', uselist=False)
 
     def __init__(self, username, email, hash):
         self.username = username
@@ -43,16 +44,16 @@ class Order(db.Model):
     patient_name = db.Column(db.String(120), nullable=False)
     patient_age = db.Column(db.Integer, nullable=False)
     color_chart = db.Column(db.String(30), nullable=False)
-    phone_number = db.Column(db.String(30), nullable=False)
+    dates = db.Column(db.Date)
     patient_sex = db.Column(db.String(10), nullable=False)
     indications = db.Column(db.String(120), nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, patient_name, patient_age, color_chart, phone_number, patient_sex, indications, doctor_id):
+    def __init__(self, patient_name, patient_age, color_chart, dates, patient_sex, indications, doctor_id):
         self.patient_name = patient_name
         self.patient_age = patient_age
         self.color_chart = color_chart
-        self.phone_number = phone_number
+        self.dates = dates
         self.patient_sex = patient_sex
         self.indications = indications
         self.doctor_id = doctor_id
@@ -64,11 +65,13 @@ def index():
     """Show homepage""" 
 
     user_id = session["id"]
-    return render_template("index.html")
+    order_info = db.session.execute(db.select(Order).filter_by(doctor_id=user_id).order_by(Order.dates)).scalars().all()
+
+    return render_template("index.html", order=order_info)
 
 @app.route('/login', methods=["POST", "GET"])
 def login():
-    """Log user in"""
+    """Log user in"""                       
 
     # Forget any user_id
     session.clear()
@@ -112,14 +115,14 @@ def register():
         name = request.form.get("name")
         email = request.form.get("email")
         password = request.form.get("password")
-        confirm_Password = request.form.get("confirm-password")
+        confirm_password = request.form.get("confirm-password")
 
         # Ensure username, email and password were submitted
         if not name or not email or not password:
             return render_template("register.html")
 
         # Ensure password and confirm password are equal
-        if password != confirm_Password:
+        if password != confirm_password:
             return render_template("register.html")
 
         # Encript the password
@@ -148,37 +151,39 @@ def location():
 def order():
     """Show the form to do an order""" 
     if request.method == "POST":
-        patient_Name = request.form.get("patient-name")
-        patient_Age = request.form.get("patient-age")
-        patient_Color_Chart = request.form.get("tooth-color-chart")
-        phone_Number = request.form.get("floating-phone")
+        patient_name = request.form.get("patient-name")
+        patient_age = request.form.get("patient-age")
+        patient_color_chart = request.form.get("tooth-color-chart")
         indications = request.form.get("indications")
-        patient_Men = request.form.get("men")
-        patient_Women = request.form.get("women")
+        patient_men = request.form.get("men")
+        patient_women = request.form.get("women")
+        dates = date.today()
 
         user_id = session["id"]
 
-        # Ensure all the data were entered
-        if not patient_Name or not patient_Age or not patient_Color_Chart or not indications or not phone_Number:
+        # Ensure all the data were entered correctly
+        if not patient_name or not patient_age or not patient_color_chart or not indications:
             return render_template("order.html")
-        if not patient_Men and not patient_Women:
+        if not patient_men and not patient_women:
+            return render_template("order.html")
+        if int(patient_age) < 5:
             return render_template("order.html")
 
-        if patient_Men:
+        if patient_men:
             # Insert into the database a patient who is a men
-            new_patient = Order(patient_name=patient_Name, patient_age=patient_Age, color_chart=patient_Color_Chart, phone_number=phone_Number, patient_sex=patient_Men, indications=indications, doctor_id=user_id)
+            new_patient = Order(patient_name=patient_name, patient_age=patient_age, color_chart=patient_color_chart, dates=dates, patient_sex=patient_men, indications=indications, doctor_id=user_id)
             db.session.add(new_patient)
             db.session.commit()
-        elif patient_Women:
+        elif patient_women:
             # Insert into the database a patient who is a women
-            new_patient = Order(patient_name=patient_Name, patient_age=patient_Age, color_chart=patient_Color_Chart, phone_number=phone_Number, patient_sex=patient_Women, indications=indications, doctor_id=user_id)
+            new_patient = Order(patient_name=patient_name, patient_age=patient_age, color_chart=patient_color_chart, dates=dates, patient_sex=patient_women, indications=indications, doctor_id=user_id)
             db.session.add(new_patient)
             db.session.commit()
 
         return redirect("/")
     else:
         return render_template("order.html")
-
+    
 
 if __name__ == "__main__":
     from app import app, db
