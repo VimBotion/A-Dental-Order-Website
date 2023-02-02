@@ -4,6 +4,18 @@ const email = document.getElementById('email');
 const password = document.getElementById('password');
 const confirmpassword = document.getElementById('confirm-password');
 
+function setErrorFor(element, message) {
+    element.classList.remove("success");
+    element.classList.add("error");
+    element.innerHTML = message;
+} 
+
+function setSuccesFor(element, message) {
+    element.classList.remove("error");
+    element.classList.add("success");
+    element.innerHTML = message;
+} 
+
 form.addEventListener('submit', e => {
 	e.preventDefault();
 	
@@ -49,10 +61,3 @@ function checkInputs() {
 function Pattern(email) {
 	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
 }
-
-// setSuccessFor
-
-// setErrorFor
-
-
-
