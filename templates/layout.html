@@ -7,6 +7,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.css"  rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/flowbite.min.js"></script>
         <title>{% block title %}{% endblock %}</title>
+
     </head>
     <body>
       {% if session["id"] %}  
@@ -40,6 +41,9 @@
 
       {% block main %}
     
+      {% endblock %}
+      {% block javascript %}
+      
       {% endblock %}   
     </body>
     <footer class="fixed bottom-0 w-full bg-primary text-white text-center p-2">

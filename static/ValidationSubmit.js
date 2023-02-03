@@ -4,6 +4,8 @@ const email = document.getElementById('email');
 const password = document.getElementById('password');
 const confirmpassword = document.getElementById('confirm-password');
 
+console.log(form, username, email, password, confirmpassword)
+
 function setErrorFor(element, message) {
     element.classList.remove("success");
     element.classList.add("error");
@@ -32,7 +34,7 @@ function checkInputs() {
 	if(usernameValue === '') {
 		setErrorFor(username, 'Username cannot be blank');
 	} else {
-		setSuccessFor(username);
+		setSuccesFor(username);
 	}
 	
 	if(emailValue === '') {
@@ -40,13 +42,13 @@ function checkInputs() {
 	} else if (!Pattern(emailValue)) {
 		setErrorFor(email, 'Not a valid email');
 	} else {
-		setSuccessFor(email);
+		setSuccesFor(email);
 	}
 	
 	if(passwordValue === '') {
 		setErrorFor(password, 'Password cannot be blank');
 	} else {
-		setSuccessFor(password);
+		setSuccesFor(password);
 	}
 	
 	if(passwordValue === '') {
@@ -54,7 +56,7 @@ function checkInputs() {
 	} else if(passwordValue !== confirmpasswordValue) {
 		setErrorFor(confirmpassword, 'Passwords does not match');
 	} else{
-		setSuccessFor(confirmpassword);
+		setSuccesFor(confirmpassword);
 	}
 }
 
