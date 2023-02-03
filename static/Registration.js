@@ -4,10 +4,10 @@ const email = document.getElementById('email');
 const password = document.getElementById('password');
 const password2 = document.getElementById('confirm-password');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
+form.addEventListener('submit', (event) => {
+    
     checkInputs();
+    
 });
 
 function checkInputs() {
@@ -18,6 +18,7 @@ function checkInputs() {
 
     if(usernameValue === '') {
         setErrorFor(username, 'Username cannot be blank');
+        event.preventDefault
     } else {
           setSuccessFor(username, '');
     }
