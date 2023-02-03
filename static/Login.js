@@ -3,11 +3,7 @@ const username = document.getElementById('username');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
 
-    checkInputs();
-});
 
 function checkInputs() {
     const usernameValue = username.value.trim();
