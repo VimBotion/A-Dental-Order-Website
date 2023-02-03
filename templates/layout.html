@@ -11,6 +11,7 @@
     </head>
     <body>
       {% if session["id"] %}  
+      <nav class="bg-primary border-gray-200  px-2 sm:px-4 py-2.5 dark:bg-primary w-full">
       <nav class="bg-primary border-gray-200 px-2 sm:px-10 py-2.5  dark:bg-primary ">
         <div class="ml-6 flex flex-wrap items-center justify-end">
           <a href="/" class="flex items-center">
@@ -42,16 +43,19 @@
       {% block main %}
     
       {% endblock %}
+
       {% block javascript %}
       
-      {% endblock %}   
+
+      {% endblock %}
+
     </body>
     <footer class="fixed bottom-0 w-full bg-primary text-white text-center p-2">
       <p class="block m-1 text-left text-sm"> Copyright © 2023 Campoverde</p>
       <nav class="flex text-white no-underline">
         <p class="block text-sm m-1 p-1 text-gray-300">Phone Number: 432-234-1234</p>
         <p class="block text-sm m-1 p-1 text-gray-300">Email: email@gmail.com</p>
-        <a href="https://www.instagram.com/automated_side_loader/" class="block text-sm m-1 p-1 text-gray-300">Instagram:</a>
+        <a href="https://www.instagram.com/_esteban_campoverde/" class="block text-sm m-1 p-1 text-gray-300">Instagram</a>
       </nav>
     </footer>
 </html>
