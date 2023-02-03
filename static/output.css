@@ -632,8 +632,8 @@ video {
   margin-left: 0.5rem;
 }
 
-.mb-1 {
-  margin-bottom: 0.25rem;
+.ml-0 {
+  margin-left: 0px;
 }
 
 .box-border {
@@ -702,6 +702,10 @@ video {
 
 .w-4 {
   width: 1rem;
+}
+
+.w-screen {
+  width: 100vw;
 }
 
 .min-w-full {
@@ -850,9 +854,16 @@ video {
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
 
-.bg-teal-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(13 148 136 / var(--tw-bg-opacity));
+.bg-cover {
+  background-size: cover;
+}
+
+.bg-center {
+  background-position: center;
+}
+
+.bg-no-repeat {
+  background-repeat: no-repeat;
 }
 
 .p-2 {
@@ -919,6 +930,11 @@ video {
   padding-right: 1.25rem;
 }
 
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
 .pl-10 {
   padding-left: 2.5rem;
 }
@@ -942,6 +958,11 @@ video {
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .text-2xl {
@@ -1024,9 +1045,19 @@ video {
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-green-700:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(21 128 61 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-blue-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(30 64 175 / var(--tw-bg-opacity));
+}
+
+.hover\:text-lg:hover {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .focus\:border-blue-600:focus {
@@ -1262,11 +1293,20 @@ video {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
 }
 
 @media (min-width: 768px) {
   .md\:mt-0 {
     margin-top: 0px;
+  }
+
+  .md\:ml-0 {
+    margin-left: 0px;
   }
 
   .md\:block {
@@ -1293,6 +1333,10 @@ video {
     flex-direction: row;
   }
 
+  .md\:justify-start {
+    justify-content: flex-start;
+  }
+
   .md\:gap-6 {
     gap: 1.5rem;
   }
@@ -1310,6 +1354,10 @@ video {
   .md\:bg-primary {
     --tw-bg-opacity: 1;
     background-color: rgb(18 43 57 / var(--tw-bg-opacity));
+  }
+
+  .md\:bg-auto {
+    background-size: auto;
   }
 
   .md\:p-0 {
