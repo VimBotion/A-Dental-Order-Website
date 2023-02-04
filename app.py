@@ -77,7 +77,7 @@ def login():
     session.clear()
 
     if request.method == "POST":
-        username = request.form.get("username")
+        username = request.form.get("name")
         email = request.form.get("email")
         password = request.form.get("password")
 
@@ -91,7 +91,7 @@ def login():
         # Ensure username exists and password and email are correct
         if len(rows) == 0 or not check_password_hash(rows[0].hash, password) or rows[0].email != email:
             return render_template("login.html")
-           
+                                                                                                                   
         # Remember which user has logged in
         session["id"] = rows[0].id
 
