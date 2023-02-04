@@ -13,6 +13,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if session.get("id") is None:
+            print("login")
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
@@ -59,7 +60,7 @@ class Order(db.Model):
         self.doctor_id = doctor_id
 
 
-@app.route('/')
+@app.route('/',  methods=["POST","GET"])
 @login_required
 def index():
     """Show homepage""" 
@@ -128,17 +129,25 @@ def register():
         # Encript the password
         hash = generate_password_hash(password)
 
+        print("session")
         # Add the new user to the database only if the new name doesn't exist
         try: 
             new_user = User(username=name, email=email, hash=hash)
             db.session.add(new_user)
             db.session.commit()
-            session["id"] = "new_user.get_id"
+            print("session",new_user)
+
+            session["id"] = new_user.get_id
+            print("session")
+            print(session)
             return redirect("/")
-        except: 
+        except:
+            print('EXC')
+
             return redirect("/register")
 
     else:
+        print('EXC1')
         return render_template("register.html")
     
 @app.route('/location')

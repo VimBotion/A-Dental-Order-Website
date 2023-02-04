@@ -4,10 +4,10 @@
 
 @layer components {
     .error {
-        @apply text-red-700 mb-3 text-left
+        @apply text-red-600 mb-3 text-left
     }
 
     .success {
-        @apply text-green-700 mb-3 text-left
+        @apply text-green-600 mb-3 text-left
     }
 }
