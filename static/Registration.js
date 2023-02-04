@@ -1,69 +1,110 @@
-const form = document.getElementById('form');
-const username = document.getElementById('username');
-const email = document.getElementById('email');
-const password = document.getElementById('password');
-const password2 = document.getElementById('confirm-password');
+const validateForm = (formSelector, callback) => {
+    const formElement = document.querySelector(formSelector);
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    const validationOptions = [
+        {
+            attribute: 'minlength',
+            isValid: input => input.value && input.value.length >= parseInt(input.minLength, 10),
+            errorMessage: (input, label) => `${label.textContent} needs to be at least ${input.minLength} characters`,
+        },
+        {
+            attribute: 'custommaxlength',
+            isValid: input => input.value && input.value.length <= parseInt(input.getAttribute('custommaxlength'), 10),
+            errorMessage: (input, label) => `${label.textContent} needs to be less than ${input.getAttribute('custommaxlength')} characters`,
+        },
+        {
+            attribute: 'match',
+            isValid: input => {
+                const matchSelector = input.getAttribute('match');
+                const matchedElement = formElement.querySelector(`#${matchSelector}`);
+                return matchedElement && matchedElement.value.trim() === input.value.trim();
+            },
+            errorMessage: (input, label) => {
+                const matchSelector = input.getAttribute('match');
+                const matchedElement = formElement.querySelector(`#${matchSelector}`);
+                const matchedLabel = matchedElement.parentElement.parentElement.querySelector('label');
 
-    checkInputs();
-});
+                return `${label.textContent} should match ${matchedLabel.textContent}`;
+            },
+        },
+        {
+            attribute: 'pattern',
+            isValid: input => {
+                const patternRegex = new RegExp(input.pattern);
+                return patternRegex.test(input.value);
+            },
+            errorMessage: (input, label) => `Not a valid ${label.textContent}`,
+        },
+        {
+            attribute: 'required',
+            isValid: input => input.value.trim() !== '',
+            errorMessage: (input, label) => `${label.textContent} is required`
+        },
+    ]
+    const validateSingleFormGroup = formGroup => {
+        const label = formGroup.querySelector('label');
+        const input = formGroup.querySelector('input, textarea');
+        const errorContainer = formGroup.querySelector('.error');
+        const errorIcon = formGroup.querySelector('.error-icon');
+        const successIcon = formGroup.querySelector('.success-icon');
 
-function checkInputs() {
-    const usernameValue = username.value.trim();
-    const emailValue = email.value.trim();
-    const passwordValue = password.value.trim();
-    const password2Value = password2.value.trim();
+        let formGroupError = false;
 
-    if(usernameValue === '') {
-        setErrorFor(username, 'Username cannot be blank');
-    } else {
-          setSuccessFor(username, '');
+        for (const option of validationOptions) {
+            if(input.hasAttribute(option.attribute) && !option.isValid(input)) {
+                errorContainer.textContent = option.errorMessage(input, label);
+                input.classList.add('border-red-700');
+                input.classList.remove('border-green-700');
+                successIcon.classList.add('hidden');
+                errorIcon.classList.remove('hidden');
+                formGroupError = true;
+            }
+        }
+
+        if(!formGroupError) {
+            errorContainer.textContent = '';
+            input.classList.add('border-green-700');
+            input.classList.remove('border-red-700');
+            successIcon.classList.remove('hidden');
+            errorIcon.classList.add('hidden');
+        }
+        return !formGroupError;
+
+    };
+
+    formElement.setAttribute('novalidate', '');
+
+    Array.from(formElement.elements).forEach(element => {
+        element.addEventListener('blur', event => {
+            validateSingleFormGroup(event.srcElement.parentElement.parentElement);
+        });
+    });
+
+    formElement.addEventListener('submit', event => {
+        const formValid = validateAllFormGroups(formElement);
+
+        if(!formValid) {
+            event.preventDefault();
+        } else {
+            console.log('Form is valid');
+            callback(formElement);
+        }
+    });
+
+    const validateAllFormGroups = formToValidate => {
+        const formGroups = Array.from(formToValidate.querySelectorAll('.formGroup'));    
+    
+    return formGroups.every(formGroup => validateSingleFormGroup(formGroup));
+};
+};
+
+    const sendToAPI = (formElement) => {
+        const formObject = Array.from(formElement.elements)
+        .filter(element => element.type !== 'submit')
+        .reduce((accumulator, element) => ({ ...accumulator, [element.id]: element.value}), {} );
+
+        console.log(formObject);
+
     }
 
-    if(emailValue === '') {
-        setErrorFor(email, 'Email cannot be blank');
-    } else if(!isEmail(emailValue)) {
-        setErrorFor(email, 'Email is not valid');
-    } else {
-        setSuccessFor(email, '');
-    }
-
-    if(passwordValue === '') {
-        setErrorFor(password, 'Password cannot be blank');
-    } else {
-        setSuccessFor(password, '');
-    }
-
-    if(password2Value === '') {
-        setErrorFor(password2, 'Confirm-password cannot be blank')
-    } else if(passwordValue !== password2Value) {
-        setErrorFor(password2, 'Passwords does not match');
-    } else {
-        setSuccessFor(password2, '');
-    }
-}
-
-function setErrorFor(input, message) {
-    const formControl = input.parentElement;
-    const small = formControl.querySelector('small');
-
-    small.innerText = message;
-
-    formControl.className = 'form-control error';
-}
-
-function setSuccessFor(input, message) {
-    const formControl = input.parentElement;
-    const small = formControl.querySelector('small');
-
-    small.innerText = message;
-
-    formControl.className = 'form-control success';
-}
-
-function isEmail(email) {
-	return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
-}
-
+validateForm('#registrationForm', sendToAPI);

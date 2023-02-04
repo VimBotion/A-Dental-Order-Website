@@ -4,46 +4,74 @@
 {% block main %}
     <div style="background-image: url('https://www.ukri.org/wp-content/uploads/2021/02/UKRI-120221-DentistPrecautionsCOVID-GettyImages-1280255955.jpg');" class="bg-center bg-cover bg-no-repeat md:bg-auto flex justify-center items-center h-screen w-screen text-xs sm:text-base">
       <div class="w-96 p-6 shadow-lg bg-white rounded-md">
-        <form action="/register" method="post" class="text-center p-5 rounded" id="form">
-          <h1 class="font-bold mb-5 text-xl">Sign Up</h1>
+        <h1 class="font-bold mb-5 text-xl text-center">Sign Up</h1>
 
-          <div class="form-control">
+        <form action="/register" method="post" class="text-center p-5 rounded" id="registrationForm">
+          
+          <div class="formGroup">
 
-              <label class="text-left font-bold block mb-2" for="username">Name:</label>
-              <input autofocus class="mt-3 mb-3 w-full box-border rounded" placeholder="Name" type="text" id="username" name="name">
-              <small></small>
+              <label class="text-left font-bold block mb-2" for="username">Name</label>
+              <div class="flex items-center">
+              <input custommaxlength="10" minlength="3" required autofocus class="mt-3 mb-3 w-full box-border rounded" placeholder="Name" type="text" id="username" name="name">
+              <span class="error-icon hidden -ml-6 text-red-700">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </span>
+              <span class="success-icon hidden -ml-6 text-green-700">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>
+              </div>
+            <div class="error text-red-700 py-2"></div>
+
+           </div>
+
+          <div class="formGroup">
+
+              <label class="text-left font-bold block mb-2" for="email">Email</label>
+              <div class="flex items-center">
+              <input pattern="^(.+)@(.+)$" required class="mt-3 mb-3 w-full box-border rounded" placeholder="name@example.com" type="email" id="email" name="email">
+              <span class="error-icon hidden -ml-6 text-red-700">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </span>
+              <span class="success-icon hidden -ml-6 text-green-700">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>
+              </div>
               
+              <div class="error text-red-700 py-2"></div>
 
           </div>
 
-          <div class="form-control">
+          <div class="formGroup"> 
 
-              <label class="text-left font-bold block mb-2" for="email">Email:</label>
-              <input class="mt-3 mb-3 w-full box-border rounded" placeholder="name@example.com" type="email" id="email" name="email">
-              <small></small>
-              
+              <label class="mt-3 text-left font-bold block mb-2" for="password">Password</label>
+              <div class="flex items-center">
+              <input required minlength="8" class="mt-3 mb-3 w-full box-border rounded password" placeholder="Password" type="password" id="password" name="password">
+              <span class="error-icon hidden -ml-6 text-red-700">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </span>
+              <span class="success-icon hidden -ml-6 text-green-700">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>
+              </div>
+              <div class="error text-red-700 py-2"></div>
+          </div>
+          
+          <div class="formGroup">
 
+              <label class="mt-3 text-left font-bold block mb-2" for="confirm-password">Confirm your Password</label>
+              <div class="flex items-center">
+              <input match="password" required minlength="8" class="mt-3 mb-3 w-full box-border rounded password" placeholder="Repeat your password" type="password" id="confirm-password" name="confirm-password">
+              <span class="error-icon hidden -ml-6 text-red-700">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </span>
+              <span class="success-icon hidden -ml-6 text-green-700">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>        
+             </div>
+              <div class="error text-red-700 py-2"></div>
           </div>
 
-          <div class="form-control"> 
-
-              <label class="mt-3 text-left font-bold block mb-2" for="password">Password:</label>
-              <input class="mt-3 mb-3 w-full box-border rounded password" placeholder="Password" type="password" id="password" name="password">
-              <small></small>
-              
-
-          </div>
-
-          <div class="form-control">
-
-              <label class="mt-3 text-left font-bold block mb-2" for="confirm-password">Confirm your Password:</label>
-              <input class="mt-3 mb-3 w-full box-border rounded password" placeholder="Repeat your password" type="password" id="confirm-password" name="confirm-password">
-              <small></small>
-              
-
-          </div>
-
-          <input class="hover:text-lg hover:bg-green-700 mt-6 w-32 h-8 bg-green-400 brightness-110 text-white rounded cursor-pointer" type="submit" value="Sign in" id="submit" onclick="checkInputs()">
+          <button type="submit" class="hover:text-lg hover:bg-green-700 mt-6 w-32 h-8 bg-green-400 brightness-110 text-white rounded cursor-pointer">Register</button>
           <p class="mt-6 text-sm text-left font-light">Already have an account? <a href="/login" class="underline">Sign In</a></p>
         </form>
       </div>
