@@ -53,8 +53,8 @@ const validateForm = (formSelector, callback) => {
         for (const option of validationOptions) {
             if(input.hasAttribute(option.attribute) && !option.isValid(input)) {
                 errorContainer.textContent = option.errorMessage(input, label);
-                input.classList.add('border-red-700');
-                input.classList.remove('border-green-700');
+                input.classList.add('border-red-600');
+                input.classList.remove('border-green-600');
                 successIcon.classList.add('hidden');
                 errorIcon.classList.remove('hidden');
                 formGroupError = true;
@@ -63,8 +63,8 @@ const validateForm = (formSelector, callback) => {
 
         if(!formGroupError) {
             errorContainer.textContent = '';
-            input.classList.add('border-green-700');
-            input.classList.remove('border-red-700');
+            input.classList.add('border-green-600');
+            input.classList.remove('border-red-600');
             successIcon.classList.remove('hidden');
             errorIcon.classList.add('hidden');
         }

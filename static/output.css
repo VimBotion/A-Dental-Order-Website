@@ -520,13 +520,6 @@ video {
   color: rgb(185 28 28 / var(--tw-text-opacity));
 }
 
-.success {
-  margin-bottom: 0.75rem;
-  text-align: left;
-  --tw-text-opacity: 1;
-  color: rgb(21 128 61 / var(--tw-text-opacity));
-}
-
 .sr-only {
   position: absolute;
   width: 1px;
@@ -639,24 +632,8 @@ video {
   margin-left: 0.5rem;
 }
 
-.ml-0 {
-  margin-left: 0px;
-}
-
 .-ml-6 {
   margin-left: -1.5rem;
-}
-
-.-ml-7 {
-  margin-left: -1.75rem;
-}
-
-.-mr-6 {
-  margin-right: -1.5rem;
-}
-
-.-mr-5 {
-  margin-right: -1.25rem;
 }
 
 .box-border {
@@ -707,12 +684,12 @@ video {
   height: 1rem;
 }
 
-.w-6 {
-  width: 1.5rem;
-}
-
 .w-full {
   width: 100%;
+}
+
+.w-6 {
+  width: 1.5rem;
 }
 
 .w-96 {
@@ -729,10 +706,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-5 {
-  width: 1.25rem;
 }
 
 .min-w-full {
@@ -957,11 +930,6 @@ video {
   padding-right: 1.25rem;
 }
 
-.py-0 {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
 .pl-10 {
   padding-left: 2.5rem;
 }
@@ -1052,11 +1020,6 @@ video {
 .text-green-700 {
   --tw-text-opacity: 1;
   color: rgb(21 128 61 / var(--tw-text-opacity));
-}
-
-.text-green-800 {
-  --tw-text-opacity: 1;
-  color: rgb(22 101 52 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1313,11 +1276,6 @@ video {
 }
 
 @media (min-width: 640px) {
-  .sm\:-mx-6 {
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-  }
-
   .sm\:h-9 {
     height: 2.25rem;
   }
@@ -1336,11 +1294,6 @@ video {
     padding-right: 1rem;
   }
 
-  .sm\:px-10 {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-  }
-
   .sm\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
@@ -1350,10 +1303,6 @@ video {
 @media (min-width: 768px) {
   .md\:mt-0 {
     margin-top: 0px;
-  }
-
-  .md\:ml-0 {
-    margin-left: 0px;
   }
 
   .md\:block {
@@ -1378,10 +1327,6 @@ video {
 
   .md\:flex-row {
     flex-direction: row;
-  }
-
-  .md\:justify-start {
-    justify-content: flex-start;
   }
 
   .md\:gap-6 {
@@ -1443,12 +1388,5 @@ video {
       --tw-text-opacity: 1;
       color: rgb(255 255 255 / var(--tw-text-opacity));
     }
-  }
-}
-
-@media (min-width: 1024px) {
-  .lg\:-mx-8 {
-    margin-left: -2rem;
-    margin-right: -2rem;
   }
 }
