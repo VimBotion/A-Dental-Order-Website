@@ -639,6 +639,10 @@ video {
   margin-left: 0.5rem;
 }
 
+.-ml-6 {
+  margin-left: -1.5rem;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -1017,6 +1021,16 @@ video {
 .text-blue-600 {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
+.text-red-700 {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
+}
+
+.text-green-700 {
+  --tw-text-opacity: 1;
+  color: rgb(21 128 61 / var(--tw-text-opacity));
 }
 
 .underline {

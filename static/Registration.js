@@ -1,87 +1,111 @@
-const form = document.getElementById('form');
-const username = document.getElementById('username');
-const email = document.getElementById('email');
-const password = document.getElementById('password');
-const password2 = document.getElementById('confirm-password');
+const validateForm = (formSelector, callback) => {
+    const formElement = document.querySelector(formSelector);
 
-form.addEventListener('submit', (event) => {
+    const validationOptions = [
+        {
+            attribute: 'minlength',
+            isValid: input => input.value && input.value.length >= parseInt(input.minLength, 10),
+            errorMessage: (input, label) => `${label.textContent} needs to be at least ${input.minLength} characters`,
+        },
+        {
+            attribute: 'custommaxlength',
+            isValid: input => input.value && input.value.length <= parseInt(input.getAttribute('custommaxlength'), 10),
+            errorMessage: (input, label) => `${label.textContent} needs to be less than ${input.getAttribute('custommaxlength')} characters`,
+        },
+        {
+            attribute: 'match',
+            isValid: input => {
+                const matchSelector = input.getAttribute('match');
+                const matchedElement = formElement.querySelector(`#${matchSelector}`);
+                return matchedElement && matchedElement.value.trim() === input.value.trim();
+            },
+            errorMessage: (input, label) => {
+                const matchSelector = input.getAttribute('match');
+                const matchedElement = formElement.querySelector(`#${matchSelector}`);
+                const matchedLabel = matchedElement.parentElement.parentElement.querySelector('label');
 
-    checkInputs();
+                return `${label.textContent} should match ${matchedLabel.textContent}`;
+            },
+        },
+        {
+            attribute: 'pattern',
+            isValid: input => {
+                const patternRegex = new RegExp(input.pattern);
+                return patternRegex.test(input.value);
+            },
+            errorMessage: (input, label) => `Not a valid ${label.textContent}`,
+        },
+        {
+            attribute: 'required',
+            isValid: input => input.value.trim() !== '',
+            errorMessage: (input, label) => `${label.textContent} is required`
+        },
+    ]
+    const validateSingleFormGroup = formGroup => {
+        const label = formGroup.querySelector('label');
+        const input = formGroup.querySelector('input, textarea');
+        const errorContainer = formGroup.querySelector('.error');
+        const errorIcon = formGroup.querySelector('.error-icon');
+        const successIcon = formGroup.querySelector('.success-icon');
 
-    if(isFormValid()==true){
-        form.submit();
-    }else {
-        event.preventDefault();
-    }
-     
-});
+        let formGroupError = false;
 
-function isFormValid(){
-    const inputContainer = form.querySelectorAll(".form-control");
-    let result=true;
-    inputContainer.forEach((container)=>{
-        if(container.classList.contains('error')){
-            result=false;
+        for (const option of validationOptions) {
+            if(input.hasAttribute(option.attribute) && !option.isValid(input)) {
+                errorContainer.textContent = option.errorMessage(input, label);
+                input.classList.add('border-red-700');
+                input.classList.remove('border-green-700');
+                successIcon.classList.add('hidden');
+                errorIcon.classList.remove('hidden');
+                formGroupError = true;
+            }
+        }
+
+        if(!formGroupError) {
+            errorContainer.textContent = '';
+            input.classList.add('border-green-700');
+            input.classList.remove('border-red-700');
+            successIcon.classList.remove('hidden');
+            errorIcon.classList.add('hidden');
+        }
+        return !formGroupError;
+
+    };
+
+    formElement.setAttribute('novalidate', '');
+
+    Array.from(formElement.elements).forEach(element => {
+        element.addEventListener('blur', event => {
+            validateSingleFormGroup(event.srcElement.parentElement.parentElement);
+        });
+    });
+
+    formElement.addEventListener('submit', event => {
+        const formValid = validateAllFormGroups(formElement);
+
+        if(!formValid) {
+            event.preventDefault();
+        } else {
+            console.log('Form is valid');
+            callback(formElement);
         }
     });
 
-    return result;
-}
+    const validateAllFormGroups = formToValidate => {
+        const formGroups = Array.from(formToValidate.querySelectorAll('.formGroup'));    
+    
+    return formGroups.every(formGroup => validateSingleFormGroup(formGroup));
+};
+};
 
-function checkInputs() {
+    const sendToAPI = (formElement) => {
+        const formObject = Array.from(formElement.elements)
+        .filter(element => element.type !== 'submit')
+        .reduce((accumulator, element) => ({ ...accumulator, [element.id]: element.value}), {} );
 
-    if(username.value.trim() == '') {
-        setErrorFor(username, 'Username cannot be blank');
-       
-    } else {
-          setSuccessFor(username);
+        console.log(formObject);
+
     }
 
-    if(email.value.trim() == '') {
-        setErrorFor(email, 'Email cannot be blank');
-    } else if(isEmailValid(email.value)) {
-        setSuccessFor(email)
-    } else {
-        setErrorFor(email, 'Provide valid email');
-    }
-
-    if(password.value.trim() == '') {
-        setErrorFor(password, 'Password cannot be blank');
-    } else {
-        setSuccessFor(password);
-    }
-
-    if(password2.value.trim() == '') {
-        setErrorFor(password2, 'Confirm-password cannot be blank')
-    } else if(password.value.trim() !== password2.value.trim()) {
-        setErrorFor(password2, 'Passwords does not match');
-    } else {
-        setSuccessFor(password2);
-    }
-}
-
-function setErrorFor(element, message) {
-    const parent = element.parentElement;
-    if(parent.classList.contains('success')){
-        parent.classList.remove('success');
-    }
-    parent.classList.add("error");
-    const paragraph = parent.querySelector('p');
-    paragraph.textContent = message;
-}
-
-function setSuccessFor(element) {
-    const parent = element.parentElement;
-    if(parent.classList.contains('error')){
-        parent.classList.remove('error');
-    }
-    parent.classList.add("success")
-
-   
-}
-
-function isEmailValid(email) {
-    const reg =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return reg.test(email);
-}
+validateForm('#registrationForm', sendToAPI);
 
