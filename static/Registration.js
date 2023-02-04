@@ -108,3 +108,4 @@ const validateForm = (formSelector, callback) => {
     }
 
 validateForm('#registrationForm', sendToAPI);
+
