@@ -44,7 +44,7 @@ REGISTRATION.JS AND LOGIN.JS
 
 We created registration.js and login.js which works this way:
 
-We have an array of different validation options (items in our array which also have three properties: attribute, isValid, and errormessage) that are: minlength, custommaxlength, match, required and pattern (This options are properties in our html which makes the code very reusable).
+We have an array of different validation options (items in our array which also have three properties: attribute, isValid, and errormessage) that are: minlength, custommaxlength, match, required and pattern (This options are attributes in our html which makes the code very reusable).
 
     -Minlength: The isValid property takes the input value and its length and makes it so its length cannot be less than 3 charactes which we specify in the html element, then the errormessage property takes the input and the label and pops a message of error with the specific label if the input is not typed as we intended.
     -custommaxlength: The isValid property takes the input value and its length and makes it so its length cannot be more than 10 charactes which we specify in the html element, then the errormessage property takes the input and the label and pops a message of error with the specific label and the specific max length that we specified if the input is not typed as we intended.
