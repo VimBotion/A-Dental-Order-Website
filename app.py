@@ -169,10 +169,11 @@ def order():
             return render_template("order.html")
 
         if patient_sex:
-            # Insert into the database the patient
+            # Insert into the database a patient who is a men
             new_patient = Order(patient_name=patient_name, patient_age=patient_age, color_chart=patient_color_chart, dates=dates, patient_sex=patient_sex, indications=indications, doctor_id=user_id)
             db.session.add(new_patient)
             db.session.commit()
+        
 
         return redirect("/")
     else:
