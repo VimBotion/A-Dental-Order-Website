@@ -584,6 +584,10 @@ video {
   margin: 0px;
 }
 
+.m-2 {
+  margin: 0.5rem;
+}
+
 .ml-6 {
   margin-left: 1.5rem;
 }
@@ -620,10 +624,6 @@ video {
   margin-bottom: 0.75rem;
 }
 
-.-ml-6 {
-  margin-left: -1.5rem;
-}
-
 .mt-6 {
   margin-top: 1.5rem;
 }
@@ -638,6 +638,22 @@ video {
 
 .ml-2 {
   margin-left: 0.5rem;
+}
+
+.-ml-6 {
+  margin-left: -1.5rem;
+}
+
+.mr-0 {
+  margin-right: 0px;
+}
+
+.ml-0 {
+  margin-left: 0px;
+}
+
+.ml-1 {
+  margin-left: 0.25rem;
 }
 
 .box-border {
@@ -696,10 +712,6 @@ video {
   width: 1.5rem;
 }
 
-.w-screen {
-  width: 100vw;
-}
-
 .w-96 {
   width: 24rem;
 }
@@ -712,6 +724,14 @@ video {
   width: 1rem;
 }
 
+.w-screen {
+  width: 100vw;
+}
+
+.w-20 {
+  width: 5rem;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -719,19 +739,6 @@ video {
 .min-w-max {
   min-width: -moz-max-content;
   min-width: max-content;
-}
-
-.min-w-fit {
-  min-width: -moz-fit-content;
-  min-width: fit-content;
-}
-
-.max-w-screen-sm {
-  max-width: 640px;
-}
-
-.max-w-screen-md {
-  max-width: 768px;
 }
 
 .origin-\[0\] {
@@ -751,6 +758,10 @@ video {
 
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .resize-none {
@@ -876,11 +887,6 @@ video {
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
 
-.bg-slate-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
-}
-
 .bg-cover {
   background-size: cover;
 }
@@ -996,14 +1002,14 @@ video {
   line-height: 1rem;
 }
 
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-}
-
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 }
 
 .font-medium {
@@ -1043,6 +1049,11 @@ video {
   color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
+}
+
 .text-red-700 {
   --tw-text-opacity: 1;
   color: rgb(185 28 28 / var(--tw-text-opacity));
@@ -1051,11 +1062,6 @@ video {
 .text-green-700 {
   --tw-text-opacity: 1;
   color: rgb(21 128 61 / var(--tw-text-opacity));
-}
-
-.text-blue-600 {
-  --tw-text-opacity: 1;
-  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1306,14 +1312,14 @@ video {
     margin-bottom: 2rem;
   }
 
-  .max-sm\:bg-slate-400 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(148 163 184 / var(--tw-bg-opacity));
+  .max-sm\:min-w-max {
+    min-width: -moz-max-content;
+    min-width: max-content;
   }
 
-  .max-sm\:bg-slate-500 {
+  .max-sm\:bg-slate-600 {
     --tw-bg-opacity: 1;
-    background-color: rgb(100 116 139 / var(--tw-bg-opacity));
+    background-color: rgb(71 85 105 / var(--tw-bg-opacity));
   }
 
   .max-sm\:pt-0 {
@@ -1339,11 +1345,6 @@ video {
     width: 100%;
   }
 
-  .sm\:bg-slate-400 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(148 163 184 / var(--tw-bg-opacity));
-  }
-
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -1354,6 +1355,21 @@ video {
     padding-right: 1rem;
   }
 
+  .sm\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .sm\:px-10 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .sm\:py-10 {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
   .sm\:py-6 {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
@@ -1362,6 +1378,11 @@ video {
   .sm\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .sm\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 }
 
@@ -1380,10 +1401,6 @@ video {
 
   .md\:w-auto {
     width: auto;
-  }
-
-  .md\:min-w-full {
-    min-width: 100%;
   }
 
   .md\:grid-cols-2 {
@@ -1415,11 +1432,6 @@ video {
   .md\:bg-primary {
     --tw-bg-opacity: 1;
     background-color: rgb(18 43 57 / var(--tw-bg-opacity));
-  }
-
-  .md\:bg-slate-400 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(148 163 184 / var(--tw-bg-opacity));
   }
 
   .md\:bg-auto {
