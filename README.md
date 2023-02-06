@@ -15,10 +15,15 @@ Firstly, we decided to choose the languages, tools and frameworks that we were g
 We created app.py where we imported the following libraries: 
 
 -from flask import Flask, render_template, request, redirect, session, url_for (for the backend)
+
 -from flask_sqlalchemy import SQLAlchemy (for the database)
+
 -from flask_login import UserMixin (for login)
+
 -from functools import wraps (for the login_required that prevents the user from going to the pages without previous login)
+
 -from werkzeug.security import check_password_hash, generate_password_hash (generate hash for password and compare password input with the database password)
+
 -from datetime import date (shows when the order was made in the table)
 
 
