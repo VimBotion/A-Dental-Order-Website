@@ -104,7 +104,7 @@ def login():
 def logout():
     """Log user out"""
 
-    session.pop("user", None)
+    session.clear()
     return redirect('/login')
 
 @app.route('/register', methods=["POST", "GET"])
@@ -133,7 +133,8 @@ def register():
             new_user = User(username=name, email=email, hash=hash)
             db.session.add(new_user)
             db.session.commit()
-            session["id"] = "new_user.get_id"
+            rows = db.session.execute(db.select(User).filter_by(username=name)).scalars().all()
+            session["id"] = rows[0].id
             return redirect("/")
         except: 
             return redirect("/register")
@@ -156,16 +157,22 @@ def order():
         patient_color_chart = request.form.get("tooth-color-chart")
         indications = request.form.get("indications")
         patient_sex = request.form.get("gender")
+        patient_sex = request.form.get("gender")
         dates = date.today()
 
         user_id = session["id"]
+        print(user_id)
 
         # Ensure all the data were entered correctly
+        if not patient_name or not patient_sex or not patient_color_chart or not indications:
         if not patient_name or not patient_age or not patient_color_chart or not indications:
             return render_template("order.html")
         if int(patient_age) < 5:
             return render_template("order.html")
 
+        if patient_sex:
+            # Insert into the database the patient
+            new_patient = Order(patient_name=patient_name, patient_age=patient_age, color_chart=patient_color_chart, dates=dates, patient_sex=patient_sex, indications=indications, doctor_id=user_id)
         if patient_sex:
             # Insert into the database a patient who is a men
             new_patient = Order(patient_name=patient_name, patient_age=patient_age, color_chart=patient_color_chart, dates=dates, patient_sex=patient_sex, indications=indications, doctor_id=user_id)
