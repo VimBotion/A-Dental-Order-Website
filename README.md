@@ -10,7 +10,7 @@ When my partner Vn0m and I finished all the psets we agreed to collaborate for o
 Firstly, we decided to choose the languages, tools and frameworks that we were going to use for this project which ended up being python, javascript, html, css, SQL for the languages, github, git, poetry for our tools and finally tailwindCSS and flask for our frameworks. We started by setting up flask and tailwindCSS with poetry, then we created folders called templates and static.
 
 
-APP.PY:
+###### APP.PY:
 
 We created app.py where we imported the following libraries: 
 
@@ -40,7 +40,7 @@ The location route ("/location") renders the template for location.html.
 The last route is order ("/order") which takes two methos (GET, POST), if its GET renders order.html and if its POST it takes the user input: patient_name, patient_age, patient_color_chart, indications, patient_sex and date. Then it ensures all the data is correct and sends it to the database where the doctor_id is equal to the id of the user that is logged in. Redirects to the homepage and displays in the table all the info that was entered.
 
 
-REGISTRATION.JS AND LOGIN.JS
+###### REGISTRATION.JS AND LOGIN.JS
 
 We created registration.js and login.js which works this way:
 
@@ -56,17 +56,17 @@ After, the validateSingleFormGroup function checks the form group and see if it 
 
 Finally, we use the formGroup function to check weather if all the form is valid for it to be submited or if it has errors and it cant be submited(if every call to validateSingleFormGroup returns true then it will return true). Therefore, in our eventListener for submit we can say that the form is valid if the result of validateAllFormGroups returns true or false. When the form is not valid we trigger the event.preventDefault(); , and when its valid the sendToAPI function makes that it checks all the form elements (inputs) and make it an object so that it submits to the API when validated. 
 
-HTML:
+###### HTML:
 
 All inside the templates folder
 
 The index.html shows a table with the order history that each user submit in the order.html (order route "/order"), each user has their own table
 
 The layout.html is the base template that containts all the elements inside the head tag. It containts the footer and some jinja blocks:
-    {% block title %}{% endblock %} for the title
-    {% if session["id"] %}{% endif %} contains the navbar that is show only if the user has log in
-    {% block main %}{% endblock %} for all the content inside the main tag
-    {% block javascript %}{% endblock %} for the script tag 
+    -{% block title %}{% endblock %} for the title
+    -{% if session["id"] %}{% endif %} contains the navbar that is show only if the user has log in
+    -{% block main %}{% endblock %} for all the content inside the main tag
+    -{% block javascript %}{% endblock %} for the script tag 
 
 
 The location.html shows the location of the dental lab using google maps
@@ -77,6 +77,6 @@ The register.html shows a form with name, email, password and confirm password i
 
 The order.html shows a form with data of the patient that the user (doctor) has to fill and when submit it it redirects to the homepage showing a table with the history of the orders. If everything is correctm the data is passed to the order table in the database
 
-CSS:
+###### CSS:
 
 We use the tailwind css framework to build our website it was installed with the Tailwind CLI tool. It created a tailwind.config.js file that we used to made our own class called "text-letters" for the color of the text used in the navbar
