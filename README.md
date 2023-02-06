@@ -1,9 +1,9 @@
 # A Dental Order Website
 #### Video Demo:  https://www.youtube.com/watch?v=HUSYjzgsS8o&t=1s
 #### Description: A website to make dental orders with ease
-### Made by: MrRobotAE10 and Vn0m
+#### Made by: MrRobotAE10 and Vn0m
+#### To run this project: First install tailwind and all the libraries used. Run npx tailwindcss -i ./src/input.css -o ./static/output.css --watch, then run python3 app.py in the terminal
 
-TODO
 
 When my partner Vn0m and I finished all the psets we agreed to collaborate for our final project, at the beggining it seemed imposibble to think of building something from scratch. At first we put into the table some ideas like a videogame, a weather app, chrome extension, etc. But then looking back into week 9 we realized that a great option could be making a website with flask. We started to discuss some ideas such as an online clothing store, a product landing page, a quiz and finally the winner idea that was a dental order website because MrRobotAE10 grandparents had a dental lab which we wanted to help out by adding this online feature to it. After that we designed the logo for the website, gave it a name and chose the color palette that fits the best with the theme.
 
