@@ -69,7 +69,7 @@ The index.html shows a table with the order history that each user submit in the
 
 The layout.html is the base template that containts all the elements inside the head tag. It containts the footer and some jinja blocks:
 
-   -{% block title %}{% endblock %} for the title
+   -{% blockk title %}{% endblock %} for the title
     
    -{% if session["id"] %}{% endif %} contains the navbar that is show only if the user has log in
     
