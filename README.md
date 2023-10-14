@@ -69,13 +69,13 @@ The index.html shows a table with the order history that each user submit in the
 
 The layout.html is the base template that containts all the elements inside the head tag. It containts the footer and some jinja blocks:
 
-   - [% block title %][% endblock %] for the title (replace the [% %] for {% %})
+   - [% block title %][% endblock %] for the title (replace the [% %] for curly braces)
     
-   - [% if session["id"] %][% endif %] contains ]he navbar ]hat is show only if the user has log in (replace the [% %] for {% %})
+   - [% if session["id"] %][% endif %] contains ]he navbar ]hat is show only if the user has log in (replace the [% %] for curly braces)
     
-   -[% block main %][% endblock %] for all the content inside the main tag (replace the [% %] for {% %})
+   -[% block main %][% endblock %] for all the content inside the main tag (replace the [% %] for curly braces)
     
-   -[% block javascript %][% endblock %] for the script tag (replace the [% %] for {% %})
+   -[% block javascript %][% endblock %] for the script tag (replace the [% %] for curly braces)
 
 
 The location.html shows the location of the dental lab using google maps
